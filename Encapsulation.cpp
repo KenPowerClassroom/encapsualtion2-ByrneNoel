@@ -87,15 +87,21 @@ private:
 
 public:
     Book(const std::string& title) : title(title), isAvailable(true) {}
-
-    bool checkAvailability() const
-    {
-        return isAvailable;
-    }
-
+    
+    // check availailty should be done in book class
     void borrowBook()
     {
-        isAvailable = false;
+        if (isAvailable)
+        {
+            isAvailable = false;
+            std::cout << "Book borrowed successfully.\n";
+
+        }
+
+        else
+        {
+            std::cout << "Book is not available for borrowing.\n";
+        }
     }
 
     void returnBook() 
@@ -109,16 +115,7 @@ class Library
 public:
     void processBookBorrowing(Book& book) 
     {
-        // Violates Tell, Don't Ask
-        if (book.checkAvailability())
-        {
-            book.borrowBook();
-            std::cout << "Book borrowed successfully." << std::endl;
-        }
-        else 
-        {
-            std::cout << "Book is not available for borrowing." << std::endl;
-        }
+        book.borrowBook();
     }
 };
 
@@ -185,7 +182,7 @@ int main()
     //////////////////////////////////////////////////////////////////
 
     Thermostat thermostat(18.5);
-    thermostat.adjustHeating();         // thermostat turns om/off
+    thermostat.adjustHeating();         // thermostat turns on/off
 
     //////////////////////////////////////////////////////////////////
     // Exercise 3
@@ -193,9 +190,9 @@ int main()
 
     Book myBook("1984");
     Library library;
+    myBook.borrowBook();
 
-    library.processBookBorrowing(myBook);  // First borrow should succeed
-    library.processBookBorrowing(myBook);  // Second attempt should show not available
+
 
     //////////////////////////////////////////////////////////////////
     // Exercise 4
