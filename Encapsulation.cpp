@@ -51,9 +51,25 @@ class Thermostat
 {
 private:
     double currentTemperature;
+    HeatingSystem heatingSystem;
 
 public:
     Thermostat(double temperature) : currentTemperature(temperature) {}
+
+    // have thermostat control the heating system
+
+    void adjustHeating()
+    {
+        if (currentTemperature < 20.0f)
+        {
+            heatingSystem.turnOn();
+        }
+
+        else
+        {
+            heatingSystem.turnOff();
+        }
+    }
 
     double getCurrentTemperature() const
     {
@@ -161,7 +177,7 @@ int main()
     //////////////////////////////////////////////////////////////////
  
     BankAccount account(1000.0);
-    account.withdraw(500);
+    account.withdraw(500);              // checks internally
 
 
     //////////////////////////////////////////////////////////////////
@@ -169,17 +185,8 @@ int main()
     //////////////////////////////////////////////////////////////////
 
     Thermostat thermostat(18.5);
-    HeatingSystem heating;
+    thermostat.adjustHeating();         // thermostat turns om/off
 
-    if (thermostat.getCurrentTemperature() < 20.0)
-    {
-        heating.turnOn();
-    }
-    else 
-    {
-        heating.turnOff();
-    }
-    
     //////////////////////////////////////////////////////////////////
     // Exercise 3
     //////////////////////////////////////////////////////////////////
